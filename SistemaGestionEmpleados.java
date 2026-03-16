@@ -1,39 +1,26 @@
-import java.util.Scanner; 
+import java.util.Scanner;
 
+/**
+ * Aplicación principal que usa la clase Empleados para gestionar la plantilla.
+ */
 public class SistemaGestionEmpleados {
 
-    private Empleado[] empleados;
-
-    public SistemaGestionEmpleados(Empleado[] empleados) {
-        this.empleados = empleados;
-    }
-
-    public void aumentarSalario(double porcentaje) {
-        for (Empleado empleado : empleados) {
-            double nuevoSalario = empleado.salario * (1 + porcentaje / 100);
-            empleado.salario = nuevoSalario;
-        }
-    }
-
     public static void main(String[] args) {
-        Empleado[] empleados = new Empleado[3];
-        empleados[0] = new Empleado("Juan", "Desarrollador", 50000);
-        empleados[1] = new Empleado("María", "Diseñadora", 45000);
-        empleados[2] = new Empleado("Pedro", "Gerente", 60000);
+    Empleados empleados = new Empleados(3);
 
-        SistemaGestionEmpleados sistema = new SistemaGestionEmpleados(empleados);
+    // Añadir empleados usando la clase Cargo y constantes mínimas
+    empleados.altaEmpleado(0, new Empleado("Juan Pérez", Cargo.DESARROLLADOR, 50000));
+    empleados.altaEmpleado(1, new Empleado("María López", Cargo.DISENADOR, 45000));
+    empleados.altaEmpleado(2, new Empleado("Pedro Gómez", Cargo.GERENTE, 60000));
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Introduzca el porcentaje de aumento de salario: ");
-        double porcentaje = scanner.nextDouble();
+    Scanner scanner = new Scanner(System.in);
+    System.out.print(Textos.INTRODUCIR_PORCENTAJE);
+    double porcentaje = scanner.nextDouble();
 
-        sistema.aumentarSalario(porcentaje);
-        
-        System.out.println("Lista de Empleados:");
-        for (Empleado empleado : empleados) {
-            System.out.println(empleado);
-        }
+    empleados.aumentarSalario(porcentaje);
 
-        scanner.close();
+    empleados.mostrarListado();
+
+    scanner.close();
     }
 }
